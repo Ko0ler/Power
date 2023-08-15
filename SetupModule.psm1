@@ -1,4 +1,4 @@
-$user = "C:\Users\ouedr"
+$user = "path/to/user/directory"
 
 # ////////////////// Data //////////////////
 
