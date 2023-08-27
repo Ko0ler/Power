@@ -4,7 +4,7 @@ $user = "path/to/user/directory"
 
 # Greeting Message
 $greet = @"
-Welcome, Bro! Keep up the great work in becoming an excellent pentester and red teamer.
+Welcome, Bro! Keep up the great work in becoming an expert in offensive security.
 Study hard and stay motivated!
 "@
 
@@ -17,7 +17,7 @@ $projets = "$onedrive\Study\Computer_science\Software_engineering\Projects"
 $documents = "$onedrive\MyDocuments"
 
 # Process to start
-$processes = "msedge", "taskmgr", "explorer", "pycharm64", "VirtualBox", "code", "chrome"
+$processes = "msedge", "taskmgr", "explorer", "pycharm64", "VirtualBox", "code", "chrome" # Those have to be in the path variable to work properly
 $files = "$onedrive\Schedule\Program.txt",
          "$onedrive\Schedule\Study_map.txt",
          "$onedrive\Schedule\Note.txt",
