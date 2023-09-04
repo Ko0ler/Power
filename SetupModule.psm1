@@ -1,6 +1,10 @@
-$user = "path/to/user/directory"
+# Exemple of architecture
+# Customize as needed
+
 
 # ////////////////// Data //////////////////
+
+$user = "path/to/user/directory"
 
 # Greeting Message
 $greet = @"
@@ -9,20 +13,19 @@ Study hard and stay motivated!
 "@
 
 # Common directories
-$onedrive = "$user\OneDrive"
-$powershell = "$onedrive\Scripts\Powershell"
-$swe = "$onedrive\Study\Computer_science\Software_engineering"
-$cyber = "$onedrive\Study\Computer_science\Cybersecurity"
-$projets = "$onedrive\Study\Computer_science\Software_engineering\Projects"
-$documents = "$onedrive\MyDocuments"
+$powershell = "$user\Scripts\Powershell"
+$swe = "$user\Study\Computer_science\Software_engineering"
+$cyber = "$user\Study\Computer_science\Cybersecurity"
+$projets = "$user\Study\Computer_science\Software_engineering\Projects"
+$documents = "$user\MyDocuments"
 
 # Process to start
 $processes = "msedge", "taskmgr", "explorer", "pycharm64", "VirtualBox", "code", "chrome" # Those have to be in the path variable to work properly
-$files = "$onedrive\Schedule\Program.txt",
-         "$onedrive\Schedule\Study_map.txt",
-         "$onedrive\Schedule\Note.txt",
-         "$onedrive\Scripts\Powershell\Modules\SetupModule.psm1",
-         "$onedrive\Others\brouillon.txt"
+$files = "$user\Schedule\Program.txt",
+         "$user\Schedule\Study_map.txt",
+         "$user\Schedule\Note.txt",
+         "$user\Scripts\Powershell\Modules\SetupModule.psm1",
+         "$user\Others\brouillon.txt"
 
 # ////////////////// Functions //////////////////
 
@@ -32,7 +35,7 @@ function Greeting {
 
 # Location Command
 function GoToLocation {
-    param ([string]$Locate = $onedrive)
+    param ([string]$Locate = $user)
     Set-Location $Locate
 }
 
