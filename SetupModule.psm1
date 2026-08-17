@@ -1,31 +1,47 @@
-# Exemple of architecture
-# Customize as needed
-
+<#
+.DESCRIPTION
+Exemple of architecture
+Customize as needed
+#>
 
 # ////////////////// Data //////////////////
 
-$user = "path/to/user/directory"
-
-# Greeting Message
 $greet = @"
-Welcome, Bro! Keep up the great work in becoming an expert in offensive security.
+Welcome, Bro! Keep up the great work in becoming an excellent Pentester and Security expert.
 Study hard and stay motivated!
 "@
 
-# Common directories
-$powershell = "$user\Scripts\Powershell"
-$swe = "$user\Study\Computer_science\Software_engineering"
-$cyber = "$user\Study\Computer_science\Cybersecurity"
-$projets = "$user\Study\Computer_science\Software_engineering\Projects"
-$documents = "$user\MyDocuments"
+$user = "path/to/user/directory"
 
-# Process to start
-$processes = "msedge", "taskmgr", "explorer", "pycharm64", "VirtualBox", "code", "chrome" # Those have to be in the path variable to work properly
-$files = "$user\Schedule\Program.txt",
-         "$user\Schedule\Study_map.txt",
-         "$user\Schedule\Note.txt",
-         "$user\Scripts\Powershell\Modules\SetupModule.psm1",
-         "$user\Others\brouillon.txt"
+# Common directories
+$onedrive = "$user\OneDrive"
+$infosec = "$onedrive\Study\Cybersecurity"
+$pentest = "$onedrive\\Study\Cybersecurity\Pentest\kali_pentest"
+$swe = "$onedrive\Study\Computer_science\Software_engineering"
+$sweProjets = "$onedrive\Study\Computer_science\Software_engineering\Projects"
+$novAutre = "$onedrive\Novasys\Autres"
+$novIntern = "$onedrive\Novasys\Intership"
+$uvci = "$onedrive\UVCI"
+$notes = "$onedrive\Notes"
+$scripts = "$onedrive\Scripts"
+$psScript = "$onedrive\Scripts\Powershell\Scripts"
+$documents = "$onedrive\MyDocuments"
+
+$files = "$onedrive\Notes\Program.txt",
+         "$onedrive\Notes\Intern.txt",
+         "$onedrive\Scripts\Powershell\Modules\SetupModule.psm1"
+
+# Process to start (first step up)
+
+$processes = Get-Process | Where-Object {
+$_.MainWindowHandle -ne 0 -and  # Process has a main window
+$_.MainWindowTitle.Trim() -ne ""  # Main window has a title
+} | Select-Object -ExpandProperty Name
+
+$runningProcesses = Get-Process | Select-Object -ExpandProperty Name
+
+# In case somes processes don't appear based on the latter conditions or you want to add some, put the missing ones manually here
+$addedProcesses = "VirtualBox", "code", "mmc"
 
 # ////////////////// Functions //////////////////
 
@@ -34,17 +50,38 @@ function Greeting {
 }
 
 # Location Command
-function GoToLocation {
-    param ([string]$Locate = $user)
+function GoTo {
+    param ([string]$Locate = $onedrive)
     Set-Location $Locate
 }
 
 # Run Processes
 
+function UpdateStartingApps {
+    while (1) {
+        $UserInput = Read-Host "> Update starting Apps ? [y/n]"
+        if ($UserInput -eq 'y') {
+            Write-Output "Open every apps that you want them to start automatically, and close the unwanted (check backgrounds apps too)."
+            Read-Host -Prompt "> When done press Enter to continue..."
+            $processes | Out-File "$user\processes.txt"
+            Write-Output "Processes Updated!`nThey will start automatically when tiggered using the module 'StartApps' function or the batch script ..."
+            break
+        }
+        elseif ($UserInput -eq 'n') {
+            Write-Output "Enjoy !!!"
+            break
+        }
+        else {
+            Write-Output "Input Error!"
+        }
+    }
+
+}
+
 function StartApps {
     param ([float]$WaitTime = 5)
-    $runningProcesses = Get-Process | Select-Object -ExpandProperty Name
-    foreach ($process in $processes) {
+    $runningProcesses
+    foreach ($process in "$user\processes.txt", $addedProcesses) {
         if ($process -notin $runningProcesses) {
             Start-Process -FilePath $process -ErrorAction SilentlyContinue
             Start-Sleep -Seconds $WaitTime
@@ -52,7 +89,7 @@ function StartApps {
     }
 
     foreach ($file in $files) {
-        if (Test-Path $file) {
+        if (Test-Path -LiteralPath $file) {
             Start-Process -FilePath $file -ErrorAction SilentlyContinue
         }
     }
@@ -80,7 +117,7 @@ function MemoryCheck {
 }
 
 function StopApps {
-    foreach ($process in $processes) {
+    foreach ($process in $runningProcesses) {
         $runningProcess = Get-Process -Name $process -ErrorAction SilentlyContinue
         if ($runningProcess) {
             Stop-Process -Id $runningProcess.Id -Force
