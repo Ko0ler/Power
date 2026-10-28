@@ -1,17 +1,17 @@
 <#
 .DESCRIPTION
-Exemple of architecture
+My baseline structure
 Customize as needed
 #>
 
 # ////////////////// Data //////////////////
 
 $greet = @"
-Welcome, Bro! Keep up the great work in becoming an excellent Pentester and Security expert.
+Welcome, Bro! Keep up the great work in becoming an elite Red Teamer and Security Researcher.
 Study hard and stay motivated!
 "@
 
-$user = "path/to/user/directory"
+$user = "$HOME"
 
 # Common directories
 $onedrive = "$user\OneDrive"
@@ -37,7 +37,7 @@ $_.MainWindowTitle.Trim() -ne ""  # Main window has a title
 $runningProcesses = Get-Process | Select-Object -ExpandProperty Name
 
 # In case somes processes don't appear based on the latter conditions or you want to add some, put the missing ones manually here
-$addedProcesses = "VirtualBox", "code", "mmc"
+$addedProcesses = "VMware", "Code", "GNS3"
 
 # ////////////////// Functions //////////////////
 
