@@ -11,7 +11,7 @@ Welcome, Bro! Keep up the great work in becoming an elite Red Teamer and Securit
 Study hard and stay motivated!
 "@
 
-$user = "$HOME"
+$user = $env:USERPROFILE
 
 # Common directories
 $onedrive = "$user\OneDrive"
